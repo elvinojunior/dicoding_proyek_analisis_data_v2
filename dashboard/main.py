@@ -5,8 +5,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
-combined_df = pd.read_csv(f"{script_dir}/combined_df.csv") 
+#script_dir = os.path.dirname(os.path.realpath(__file__))
+#combined_df = pd.read_csv(f"{script_dir}/combined_df.csv") 
+combined_df = pd.read_csv("dashboard/combined_df.csv") 
 
 # Load Data
 @st.cache_data
