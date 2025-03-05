@@ -17,7 +17,7 @@ Dataset Air Quality adalah data informasi berisi tentang pemantauan kualitas uda
 - Wanliu
 - Wanshouxigong
 
-disini saya explorasi serta melakukan visualisasi untuk :
+disini saya explorasi serta melakukan visualisasi untuk mencari tau :
 1. Apakah hujan membantu mengurangi polusi udara secara signifikan?
 2. Apakah ada stasiun tertentu yang selalu memiliki kualitas udara buruk?
 ```
@@ -39,5 +39,5 @@ pip install -r requirements.txt
 ## Run steamlit app
 ```
 cd dashboard
-streamlit run dashboard.py
+streamlit run main.py
 ```
