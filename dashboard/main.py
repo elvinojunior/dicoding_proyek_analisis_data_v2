@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import os
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
+combined_df = pd.read_csv(f"{script_dir}/combined_df.csv") 
 
 # Load Data
 @st.cache_data
