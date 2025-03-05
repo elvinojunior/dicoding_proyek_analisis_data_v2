@@ -5,14 +5,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
-#script_dir = os.path.dirname(os.path.realpath(__file__))
-#combined_df = pd.read_csv(f"{script_dir}/combined_df.csv") 
-combined_df = pd.read_csv("dashboard/combined_df.csv") 
+script_dir = os.path.dirname(os.path.realpath(__file__))
+combined_df = pd.read_csv(f"{script_dir}/combined_df.csv") 
+
+combined_df.to_parquet("combined_df.parquet")
+combined_df = pd.read_parquet("combined_df.parquet")
 
 # Load Data
 @st.cache_data
 def load_data():
-    combined_df = pd.read_csv("combined_df.csv", parse_dates=["datetime"])
+    combined_df = pd.read_parquet("combined_df.parquet", parse_dates=["datetime"])
     combined_df["year"] = combined_df["datetime"].dt.year
     combined_df["Rain Condition"] = combined_df["RAIN"].apply(lambda x: "No Rain" if x == 0 else "Rain")
     return combined_df
