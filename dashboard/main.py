@@ -36,25 +36,38 @@ else:
     filtered_df = combined_df[combined_df["station"].isin(selected_stations)]
 
     # Bar Chart PM2.5
-    st.subheader("Perbandingan Produksi PM2.5 Saat Hujan dan Tidak Hujan")
-    fig, ax = plt.subplots(figsize=(10, 5))
-    mean_pm25 = filtered_df.groupby("Rain Condition")["PM2.5"].mean()
-    mean_pm25.plot(kind='bar', color=["orange", "skyblue"], ax=ax)
-    ax.set_ylabel("Konsentrasi PM2.5 (µg/m³)")
-    ax.set_xlabel("Kondisi Hujan")
+    st.subheader("🌧️Perbandingan Rata-rata PM2.5 Saat Hujan dan Tidak Hujan")
+    grouped_pm25 = filtered_df.groupby(["station", "Rain Condition"])["PM2.5"].mean().reset_index()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    custom_palette = {"No Rain": "orange", "Rain": "skyblue"}
+    sns.barplot(x="station", y="PM2.5", hue="Rain Condition", data=grouped_pm25, palette=custom_palette, ax=ax)
     ax.set_ylim(0, 120)
-    ax.set_xticklabels(mean_pm25.index, rotation=0)
+    ax.set_yticks(range(0, 121, 10))
+    for y in range(0, 121, 10):
+        ax.axhline(y=y, color='gray', linestyle='--', alpha=0.5, zorder=0)
+    ax.set_xlabel("Stasiun")
+    ax.set_ylabel("Rata-rata Konsentrasi PM2.5 (µg/m³)")
+    ax.set_title("Perbandingan Rata-rata PM2.5 Saat Hujan dan Tidak Hujan")
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+    ax.legend(title="Kondisi Hujan")
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
     st.pyplot(fig)
 
     # Bar Chart PM10
-    st.subheader("Perbandingan Produksi PM10 Saat Hujan dan Tidak Hujan")
-    fig, ax = plt.subplots(figsize=(10, 5))
-    mean_pm10 = filtered_df.groupby("Rain Condition")["PM10"].mean()
-    mean_pm10.plot(kind='bar', color=["orange", "skyblue"], ax=ax)
-    ax.set_ylabel("Konsentrasi PM10 (µg/m³)")
-    ax.set_xlabel("Kondisi Hujan")
-    ax.set_ylim(0, 140)
-    ax.set_xticklabels(mean_pm10.index, rotation=0)
+    st.subheader("🌧️Perbandingan Rata-rata PM10 Saat Hujan dan Tidak Hujan")
+    grouped_pm10 = filtered_df.groupby(["station", "Rain Condition"])["PM10"].mean().reset_index()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.barplot(x="station", y="PM10", hue="Rain Condition", data=grouped_pm10, palette=custom_palette, ax=ax)
+    ax.set_ylim(0, 150)
+    ax.set_yticks(range(0, 151, 10))
+    for y in range(0, 151, 10):
+        ax.axhline(y=y, color='gray', linestyle='--', alpha=0.5, zorder=0)
+    ax.set_xlabel("Stasiun")
+    ax.set_ylabel("Rata-rata Konsentrasi PM10 (µg/m³)")
+    ax.set_title("Perbandingan Rata-rata PM10 Saat Hujan dan Tidak Hujan")
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+    ax.legend(title="Kondisi Hujan")
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
     st.pyplot(fig)
 
     # Tren PM2.5 & PM10 per Tahun
